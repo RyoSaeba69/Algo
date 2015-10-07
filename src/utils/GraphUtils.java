@@ -12,37 +12,42 @@ import java.util.ArrayList;
  */
 public class GraphUtils {
 
-    public static DirectedGraph<String, DefaultEdge> codeToGraph(ArrayList<String> code) {
+    public static DirectedGraph<String, DefaultEdge> codeToGraph(ArrayList<String> code, int nbNucleotide) {
 
 
         DirectedGraph<String, DefaultEdge> resGraph = new SimpleDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
 
 //        By default i = 2 and n - i = 2
-        int i = 2;
+//        int i = 2;
+
+//        int nbNucleotide = 4;
 
         for(String tetranucleotide : code){
 
             int n = tetranucleotide.length();
 
-            String first = tetranucleotide.substring(0, i);
-            String last = tetranucleotide.substring(i, n);
+            for(int i = 1; i < nbNucleotide; i ++){
+                String first = tetranucleotide.substring(0, i);
+                String last = tetranucleotide.substring(i, n);
 
-            if(!resGraph.containsVertex(first)){
-                resGraph.addVertex(first);
+                if(!resGraph.containsVertex(first)){
+                    resGraph.addVertex(first);
+                }
+
+                if(!resGraph.containsVertex(last)){
+                    resGraph.addVertex(last);
+                }
+
+                try{
+                    resGraph.addEdge(first, last);
+                } catch (Exception e){
+                    return null;
+                }
             }
-
-            if(!resGraph.containsVertex(last)){
-                resGraph.addVertex(last);
-            }
-
-            try{
-                resGraph.addEdge(first, last);
-            } catch (Exception e){
-                return null;
-            }
-
         }
 
+        System.out.println("Res graph => " + resGraph);
         return resGraph;
+
     }
 }

@@ -5,6 +5,12 @@ import utils.GraphUtils;
 import java.lang.System;
 import java.util.ArrayList;
 
+//l2: 168
+//l3: 1408
+//l4: 11728
+//l5: 76312
+//l6: 475 168 ~~
+
 public class Main {
 
     public static void main(String[] args) {
@@ -22,15 +28,15 @@ public class Main {
         for (String str : allTetranucleotids) {
             ArrayList<String> curCode = new ArrayList<String>();
             curCode.add(str);
-            Code coco = new Code(curCode);
+            Code coco = new Code(curCode, 4);
             if(coco.isCircular() && coco.isSelfComplementary()){
                 System.out.println(coco.getTetranucleotides());
                 i++;
             }
         }
-        System.out.println("Length " + allTetranucleotids.size());
-
-        System.out.println("Geut one : "+i);
+//        System.out.println("Length " + allTetranucleotids.size());
+//
+//        System.out.println("Geut one : "+i);
 
 //        ArrayList<String> testCode = new ArrayList<String>();
 
@@ -47,6 +53,18 @@ public class Main {
 //
 //
 //        System.out.println(new Code(testCode));
+
+
+//        ArrayList<String> figure_three = new ArrayList<String>();
+//        figure_three.add("ATG");
+//        figure_three.add("CAC");
+//        figure_three.add("CAT");
+//        figure_three.add("GTG");
+//
+//        Code c = new Code(figure_three, 3);
+//
+//        System.out.println("Graph Figure 3 => " + c.isSelfComplementary());
+
 
     }
 

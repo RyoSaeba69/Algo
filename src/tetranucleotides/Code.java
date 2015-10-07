@@ -18,10 +18,13 @@ public class Code {
 
     private DirectedGraph<String, DefaultEdge> graph;
 
+    private int nbNucleotides;
 
-    public Code(ArrayList<String> tetranucleotides) {
+
+    public Code(ArrayList<String> tetranucleotides, int nbNucleotides) {
         this.tetranucleotides = tetranucleotides;
-        this.graph = GraphUtils.codeToGraph(this.tetranucleotides);
+        this.nbNucleotides = nbNucleotides;
+        this.graph = GraphUtils.codeToGraph(this.tetranucleotides, nbNucleotides);
     }
 
     public boolean isCircular() {
