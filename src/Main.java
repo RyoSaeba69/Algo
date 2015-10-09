@@ -3,8 +3,10 @@ import utils.Combination;
 import utils.GraphUtils;
 
 import java.lang.System;
+import java.math.BigInteger;
 import java.util.ArrayList;
 
+//l1: 12
 //l2: 168
 //l3: 1408
 //l4: 11728
@@ -16,24 +18,48 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Beginning !");
 
-        ArrayList<String> testArr = new ArrayList<String>();
-        testArr.add("A");
-        testArr.add("G");
-        testArr.add("C");
-        testArr.add("T");
+        ArrayList<ArrayList<String>> resultSet = Combination.generateSet(1);
 
-        ArrayList<String> allTetranucleotids = Combination.generate(4, "", testArr, new ArrayList<String>());
+        BigInteger nbSelfComp = BigInteger.ZERO;
 
-        int i = 0;
-        for (String str : allTetranucleotids) {
-            ArrayList<String> curCode = new ArrayList<String>();
-            curCode.add(str);
+        for(ArrayList<String> curCode : resultSet){
             Code coco = new Code(curCode, 4);
             if(coco.isCircular() && coco.isSelfComplementary()){
-                System.out.println(coco.getTetranucleotides());
-                i++;
+
+
+//                if(!curCode.get(0).equals(curCode.get(1))){
+                    System.out.println("Geut : " + coco.getGraph());
+                    System.out.println("Geut : " + coco.getTetranucleotides());
+                    System.out.println("");
+                    nbSelfComp = nbSelfComp.add(BigInteger.ONE);
+//                }
+//                nbSelfComp = nbSelfComp.add(BigInteger.ONE);
+
+
             }
         }
+
+
+        System.out.println("Geut one ===> " + nbSelfComp);
+
+//        ArrayList<String> testArr = new ArrayList<String>();
+//        testArr.add("A");
+//        testArr.add("G");
+//        testArr.add("C");
+//        testArr.add("T");
+//
+//        ArrayList<String> allTetranucleotids = Combination.generate(4, "", testArr, new ArrayList<String>());
+//
+//        int i = 0;
+//        for (String str : allTetranucleotids) {
+//            ArrayList<String> curCode = new ArrayList<String>();
+//            curCode.add(str);
+//            Code coco = new Code(curCode, 4);
+//            if(coco.isCircular() && coco.isSelfComplementary()){
+//                System.out.println(coco.getTetranucleotides());
+//                i++;
+//            }
+//        }
 //        System.out.println("Length " + allTetranucleotids.size());
 //
 //        System.out.println("Geut one : "+i);

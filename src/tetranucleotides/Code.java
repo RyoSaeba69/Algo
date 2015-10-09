@@ -37,7 +37,7 @@ public class Code {
         boolean isSelfComplementary = true;
 
         for(int i = 0; i < this.tetranucleotides.size() && isSelfComplementary;i++){
-            String tetranucleotide = this.tetranucleotides.get(0);
+            String tetranucleotide = this.tetranucleotides.get(i);
             isSelfComplementary = this.tetranucleotides.contains(reverseComplementary(tetranucleotide));
         }
 
@@ -70,6 +70,8 @@ public class Code {
     }
 
     public static String reverseComplementary(String dna){
+
+
         HashMap<String, String> compMap = new HashMap<String, String>();
         compMap.put("A", "T");
         compMap.put("T", "A");
@@ -82,6 +84,7 @@ public class Code {
         for(int i = 0; i < reverseDna.length();i++){
             res +=  compMap.get(reverseDna.substring(i, i+1));
         }
+
         return res;
     }
 

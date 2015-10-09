@@ -39,14 +39,16 @@ public class GraphUtils {
                 }
 
                 try{
-                    resGraph.addEdge(first, last);
+                    if(resGraph.addEdge(first, last) == null){
+                        return null;
+                    }
                 } catch (Exception e){
                     return null;
                 }
             }
         }
 
-        System.out.println("Res graph => " + resGraph);
+//        System.out.println("Res graph => " + resGraph);
         return resGraph;
 
     }
