@@ -9,5 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="org.jgrapht:jgrapht-core:0.9.1" level="project" />
+    <orderEntry type="library" name="com.googlecode.combinatoricslib:combinatoricslib:2.1" level="project" />
   </component>
 </module>

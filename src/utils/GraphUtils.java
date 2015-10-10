@@ -6,13 +6,14 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by antoine on 9/18/15.
  */
 public class GraphUtils {
 
-    public static DirectedGraph<String, DefaultEdge> codeToGraph(ArrayList<String> code, int nbNucleotide) {
+    public static DirectedGraph<String, DefaultEdge> codeToGraph(List<String> code, int nbNucleotide) {
 
 
         DirectedGraph<String, DefaultEdge> resGraph = new SimpleDirectedGraph<String, DefaultEdge>(DefaultEdge.class);

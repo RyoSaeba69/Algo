@@ -6,22 +6,22 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import utils.GraphUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by antoine on 9/18/15.
  */
 public class Code {
 
-    private ArrayList<String> tetranucleotides;
+    private List<String> tetranucleotides;
 
     private DirectedGraph<String, DefaultEdge> graph;
 
     private int nbNucleotides;
 
 
-    public Code(ArrayList<String> tetranucleotides, int nbNucleotides) {
+    public Code(List<String> tetranucleotides, int nbNucleotides) {
         this.tetranucleotides = tetranucleotides;
         this.nbNucleotides = nbNucleotides;
         this.graph = GraphUtils.codeToGraph(this.tetranucleotides, nbNucleotides);
@@ -88,11 +88,11 @@ public class Code {
         return res;
     }
 
-    public ArrayList<String> getTetranucleotides() {
+    public List<String> getTetranucleotides() {
         return tetranucleotides;
     }
 
-    public void setTetranucleotides(ArrayList<String> tetranucleotides) {
+    public void setTetranucleotides(List<String> tetranucleotides) {
         this.tetranucleotides = tetranucleotides;
     }
 

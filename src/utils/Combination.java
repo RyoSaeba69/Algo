@@ -1,6 +1,10 @@
 package utils;
 
-import java.util.ArrayList;
+import org.paukov.combinatorics.Factory;
+import org.paukov.combinatorics.Generator;
+import org.paukov.combinatorics.ICombinatoricsVector;
+
+import java.util.*;
 
 /**
  * Created by antoine on 9/18/15.
@@ -22,37 +26,16 @@ public class Combination {
         return res;
     }
 
-    public static ArrayList<ArrayList<String>> generateSet(int l) {
+    public static Generator<String> generateSet(int l) {
 
-        ArrayList<String> nucleotids = new ArrayList<String>();
-        nucleotids.add("A");
-        nucleotids.add("G");
-        nucleotids.add("C");
-        nucleotids.add("T");
-        ArrayList<String> lOne = generate(4, "", nucleotids, new ArrayList<String>());
-
-        ArrayList<ArrayList<String>> resultSet = new ArrayList<ArrayList<String>>();
-
-        for(String tetranucleotid : lOne){
-            ArrayList<String> newCode = new ArrayList<String>();
-            newCode.add(tetranucleotid);
-            resultSet.add(newCode);
-        }
+        ArrayList<String> lOne = TetraBuffer.getInstance().getLOne();
 
 
-        for(int i = 2; i <= l; i++){
-            ArrayList<ArrayList<String>> currentResultSet = new ArrayList<ArrayList<String>>();
-            for(ArrayList<String> code : resultSet){
-                for (String nNucleotids : lOne) {
-                    ArrayList<String> codeToAdd = new ArrayList<String>(code);
-                    codeToAdd.add(nNucleotids);
-                    currentResultSet.add(codeToAdd);
-                }
-            }
-            resultSet = currentResultSet;
-        }
+        ICombinatoricsVector<String> initialVector = Factory.createVector(lOne);
 
-        return resultSet;
+        Generator<String> gen = Factory.createSimpleCombinationGenerator(initialVector, l);
+
+        return gen;
     }
 
 }

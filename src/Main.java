@@ -1,3 +1,5 @@
+import org.paukov.combinatorics.Generator;
+import org.paukov.combinatorics.ICombinatoricsVector;
 import tetranucleotides.Code;
 import utils.Combination;
 import utils.GraphUtils;
@@ -5,6 +7,7 @@ import utils.GraphUtils;
 import java.lang.System;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Set;
 
 //l1: 12
 //l2: 168
@@ -18,79 +21,26 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Beginning !");
 
-        ArrayList<ArrayList<String>> resultSet = Combination.generateSet(1);
+        long time = System.currentTimeMillis();
+
+        Generator<String> allCodes = Combination.generateSet(2);
 
         BigInteger nbSelfComp = BigInteger.ZERO;
 
-        for(ArrayList<String> curCode : resultSet){
-            Code coco = new Code(curCode, 4);
-            if(coco.isCircular() && coco.isSelfComplementary()){
-
-
-//                if(!curCode.get(0).equals(curCode.get(1))){
-                    System.out.println("Geut : " + coco.getGraph());
-                    System.out.println("Geut : " + coco.getTetranucleotides());
-                    System.out.println("");
-                    nbSelfComp = nbSelfComp.add(BigInteger.ONE);
-//                }
-//                nbSelfComp = nbSelfComp.add(BigInteger.ONE);
-
+        for (ICombinatoricsVector<String> curCode : allCodes) {
+            Code coco = new Code(curCode.getVector(), 4);
+            if (coco.isCircular() && coco.isSelfComplementary()) {
+//                System.out.println("One More !");
+                nbSelfComp = nbSelfComp.add(BigInteger.ONE);
 
             }
         }
 
+        System.out.println("Self circular found ===> " + nbSelfComp);
 
-        System.out.println("Geut one ===> " + nbSelfComp);
+        long ellapsedTime = (System.currentTimeMillis() - time) / 1000;
 
-//        ArrayList<String> testArr = new ArrayList<String>();
-//        testArr.add("A");
-//        testArr.add("G");
-//        testArr.add("C");
-//        testArr.add("T");
-//
-//        ArrayList<String> allTetranucleotids = Combination.generate(4, "", testArr, new ArrayList<String>());
-//
-//        int i = 0;
-//        for (String str : allTetranucleotids) {
-//            ArrayList<String> curCode = new ArrayList<String>();
-//            curCode.add(str);
-//            Code coco = new Code(curCode, 4);
-//            if(coco.isCircular() && coco.isSelfComplementary()){
-//                System.out.println(coco.getTetranucleotides());
-//                i++;
-//            }
-//        }
-//        System.out.println("Length " + allTetranucleotids.size());
-//
-//        System.out.println("Geut one : "+i);
-
-//        ArrayList<String> testCode = new ArrayList<String>();
-
-//        testCode.add("AG");
-//        testCode.add("CG");
-//        testCode.add("GA");
-//        testCode.add("TC");
-//        testCode.add("TT");
-//
-//        testCode.add("AATG");
-//        testCode.add("AGTT");
-//        testCode.add("GTGT");
-//        testCode.add("GTTT");
-//
-//
-//        System.out.println(new Code(testCode));
-
-
-//        ArrayList<String> figure_three = new ArrayList<String>();
-//        figure_three.add("ATG");
-//        figure_three.add("CAC");
-//        figure_three.add("CAT");
-//        figure_three.add("GTG");
-//
-//        Code c = new Code(figure_three, 3);
-//
-//        System.out.println("Graph Figure 3 => " + c.isSelfComplementary());
-
+        System.out.println("Elapsed time : " + ellapsedTime +  " seconds");
 
     }
 
