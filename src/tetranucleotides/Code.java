@@ -6,6 +6,7 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import utils.GraphUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -86,6 +87,14 @@ public class Code {
         }
 
         return res;
+    }
+
+    public static List<String> reverseArray(List<String> code){
+
+        for(int i = 0; i < code.size();i++){
+            code.set(i, reverseComplementary(code.get(i)));
+        }
+        return code;
     }
 
     public List<String> getTetranucleotides() {

@@ -6,8 +6,7 @@ import utils.GraphUtils;
 
 import java.lang.System;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.*;
 
 //l1: 12
 //l2: 168
@@ -23,16 +22,15 @@ public class Main {
 
         long time = System.currentTimeMillis();
 
-        Generator<String> allCodes = Combination.generateSet(2);
+        Generator<String> allCodes = Combination.generateSet(4);
 
         BigInteger nbSelfComp = BigInteger.ZERO;
 
         for (ICombinatoricsVector<String> curCode : allCodes) {
             Code coco = new Code(curCode.getVector(), 4);
             if (coco.isCircular() && coco.isSelfComplementary()) {
-//                System.out.println("One More !");
                 nbSelfComp = nbSelfComp.add(BigInteger.ONE);
-
+                System.out.println("Found " + nbSelfComp + " Code " + coco.getTetranucleotides());
             }
         }
 
@@ -41,6 +39,30 @@ public class Main {
         long ellapsedTime = (System.currentTimeMillis() - time) / 1000;
 
         System.out.println("Elapsed time : " + ellapsedTime +  " seconds");
+
+
+//        System.out.println("Beginning !");
+//
+//        long time = System.currentTimeMillis();
+//
+//        for(int l = 1; l <= 60;l++){
+//            Generator<String> allCodes = Combination.generateSet(l);
+//
+//            BigInteger nbSelfComp = BigInteger.ZERO;
+//
+//            for (ICombinatoricsVector<String> curCode : allCodes) {
+//                Code coco = new Code(curCode.getVector(), 4);
+//                if (coco.isCircular() && coco.isSelfComplementary()) {
+//                    nbSelfComp = nbSelfComp.add(BigInteger.ONE);
+//                }
+//            }
+//
+//            System.out.println("L" + l + " : " + nbSelfComp + " in " + ((System.currentTimeMillis() - time) / 1000) + " seconds.");
+//
+//        }
+//        long ellapsedTime = (System.currentTimeMillis() - time) / 1000;
+//
+//        System.out.println("Elapsed time : " + ellapsedTime +  " seconds");
 
     }
 
