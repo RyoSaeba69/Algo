@@ -254,6 +254,7 @@ public class TetraBuffer {
             lOne.add("ATTC");
             lOne.add("TGAG");
         }
+//        System.out.println("lOne size : " + this.lOne.size());
         return this.lOne;
 
     }
