@@ -12,11 +12,9 @@ import utils.TetraBuffer;
 import java.lang.System;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 import java.util.function.Predicate;
 
 //l1: 12
@@ -28,92 +26,106 @@ import java.util.function.Predicate;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+//        ArrayList<String> myLOne = new ArrayList<String>();
 
-//        int lOneSize = TetraBuffer.getInstance().getLOne().size();
-//        int l = 2;
-//
-//        System.out.println("Beginning !");
-//
-//        long time = System.currentTimeMillis();
-//
-//        Generator<String> allCodes = Combination.generateSet(l);
-//
-//
-//        System.out.println("CODES SIZE : " + Utils.combinationSize(lOneSize, l));
-//
-//        BigInteger nbSelfComp = BigInteger.ZERO;
-//
-//        for (ICombinatoricsVector<String> curCode : allCodes) {
-//            Code coco = new Code(curCode.getVector(), 4);
-//            if (coco.isCircular() && coco.isSelfComplementary()) {
-//                nbSelfComp = nbSelfComp.add(BigInteger.ONE);
-////                System.out.println("Found " + nbSelfComp + " Code " + coco.getTetranucleotides());
+//        for (String tetra : TetraBuffer.getInstance().getLOne()) {
+//            if(!myLOne.contains(Code.complementary(tetra))){
+//                myLOne.add(tetra);
+//                System.out.println("reduceLone.add(\""+tetra+"\")");
 //            }
 //        }
-//
-//        System.out.println("Self circular found ===> " + nbSelfComp);
-//
-//        long ellapsedTime = (System.currentTimeMillis() - time) / 1000;
-//
-//        System.out.println("Elapsed time : " + ellapsedTime +  " seconds");
 
+//        System.out.println("MYLONE LENGTH " + myLOne.size());
 
 // With THREAD
         System.out.println("Beginning !");
 
+        int nbThread = 16;
+
         int lOneSize = TetraBuffer.getInstance().getLOne().size();
-        int maxL = 4;
+//        int maxL = 3;
 
-        Generator<String> allCodes = Combination.generateSet(maxL);
+        for (int maxL = 1; maxL <= 5; maxL++) {
+
+
+            Generator<String> allCodes = Combination.generateSet(maxL);
 //        BigInteger threadSize = new BigInteger("2000000");
-        BigInteger threadSize = new BigInteger("1500000");
+//            BigInteger threadSize = new BigInteger("15000000");
+//            BigInteger threadSize = new BigInteger("1500000");
 
-        long time = System.currentTimeMillis();
+            long time = System.currentTimeMillis();
 
-        ExecutorService pool = Executors.newFixedThreadPool(20);
+            ExecutorService pool = Executors.newFixedThreadPool(nbThread);
 
-        ArrayList<Future<BigInteger>> futures = new ArrayList<Future<BigInteger>>();
+            ArrayList<Future<BigInteger>> futures = new ArrayList<Future<BigInteger>>();
 
-        BigInteger combinSize = Utils.combinationSize(lOneSize, maxL);
-            System.out.println("L"+ maxL +" :: Code Size : " + combinSize);
+            BigInteger combinSize = Utils.combinationSize(lOneSize, maxL);
+            System.out.println("L" + maxL + " :: Code Size : " + combinSize);
 
-        BigInteger bi = BigInteger.ZERO;
-        BigInteger biSum = BigInteger.ZERO;
+            BigInteger threadSize = combinSize.divide(new BigInteger(nbThread + ""));
+            if(threadSize.compareTo(BigInteger.ZERO) == 0){
+                threadSize = combinSize;
+            }
 
 
-        while(BigIntegerUtils.lte(bi, combinSize)){
-            List<ICombinatoricsVector<String>> codesToanalyze = GeneratorUtils.generateObjectsRange(allCodes, bi, bi.add(threadSize));
-            futures.add(pool.submit(new TetraCallable(codesToanalyze, maxL)));
-            codesToanalyze = null;
-            bi = bi.add(threadSize);
-        }
+            BigInteger bi = BigInteger.ZERO;
+            BigInteger biSum = BigInteger.ZERO;
 
-        while (futures.size() > 0){
-            for(int i = 0; i < futures.size();i++){
-                Future<BigInteger> f = futures.get(i);
-                if(f != null && f.isDone()){
-                    try{
-                        biSum = biSum.add(f.get());
-                        futures.set(i, null);
-                    } catch (Exception e){
-                        System.out.print(e);
+            List<TetraCallable> callables = new ArrayList<TetraCallable>();
+
+            long j = 0;
+            boolean done = false;
+            while(!done){
+                BigInteger startIndex = threadSize.multiply(BigInteger.valueOf(j));
+                BigInteger stopIndex = startIndex.add(threadSize);
+
+                if(BigIntegerUtils.gte(stopIndex, combinSize)){
+                    stopIndex = combinSize;
+                    done = true;
+                }
+                callables.add(new TetraCallable(allCodes, startIndex, stopIndex, maxL));
+//                futures.add(pool.submit(new TetraCallable(allCodes, startIndex, stopIndex, maxL)));
+                j++;
+            }
+
+             futures.addAll(pool.invokeAll(callables));
+
+//            while (BigIntegerUtils.lte(bi, combinSize)) {
+////                List<ICombinatoricsVector<String>> codesToanalyze = GeneratorUtils.generateObjectsRange(allCodes, bi, bi.add(threadSize));
+////                System.out.println("LENGTH " + codesToanalyze.size());
+//                futures.add(pool.submit(new TetraCallable(allCodes, bi, bi.add(threadSize), maxL)));
+////                codesToanalyze = null;
+//                bi = bi.add(threadSize);
+//            }
+
+            while (futures.size() > 0) {
+//                Thread.sleep(1000);
+                for (int i = 0; i < futures.size(); i++) {
+                    Future<BigInteger> f = futures.get(i);
+                    if (f != null && f.isDone()) {
+                        try {
+                            biSum = biSum.add(f.get());
+
+                            futures.set(i, null);
+                        } catch (Exception e) {
+                            System.out.print(e);
+                        }
                     }
                 }
-            }
 
-            futures.removeIf(new Predicate<Future<BigInteger>>() {
-                @Override
-                public boolean test(Future<BigInteger> bigIntegerFuture) {
-                    return bigIntegerFuture == null;
-                }
-            });
-            try {
-                Thread.sleep(1);
-            } catch (Exception e){
-                System.out.print(e);
+                futures.removeIf(new Predicate<Future<BigInteger>>() {
+                    @Override
+                    public boolean test(Future<BigInteger> bigIntegerFuture) {
+                        return bigIntegerFuture == null;
+                    }
+                });
+//                try {
+//                    Thread.sleep(1);
+//                } catch (Exception e) {
+//                    System.out.print(e);
+//                }
             }
-        }
 
 
 //        for(int l = 1; l <= maxL; l++){
@@ -127,11 +139,12 @@ public class Main {
 //            Thread t = new Thread(new AlgoRunnable(codesToAnalyze));
 //            t.start();
 //        }
-        long ellapsedTime = (System.currentTimeMillis() - time) / 1000;
+            long ellapsedTime = (System.currentTimeMillis() - time) / 1000;
 
-        System.out.println("Elapsed time : " + ellapsedTime + " seconds");
-        System.out.println("Result : " + biSum);
-        pool.shutdown();
+            System.out.println("Elapsed time : " + ellapsedTime + " seconds");
+            System.out.println("Result : " + biSum);
+            pool.shutdown();
+        }
 //        END THREAD
 
 

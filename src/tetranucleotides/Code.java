@@ -70,6 +70,23 @@ public class Code {
         return str;
     }
 
+    public static String complementary(String dna){
+        HashMap<String, String> compMap = new HashMap<String, String>();
+        compMap.put("A", "T");
+        compMap.put("T", "A");
+        compMap.put("G", "C");
+        compMap.put("C", "G");
+
+        String res = "";
+
+        for(int i = 0; i < dna.length();i++){
+            res +=  compMap.get(dna.substring(i, i+1));
+        }
+
+        return res;
+
+    }
+
     public static String reverseComplementary(String dna){
 
 
@@ -85,6 +102,17 @@ public class Code {
         for(int i = 0; i < reverseDna.length();i++){
             res +=  compMap.get(reverseDna.substring(i, i+1));
         }
+
+        return res;
+    }
+
+    public static List<String> reverseComplementaries(List<String> dnas){
+        List<String> res = new ArrayList<String>(dnas.size());
+
+        for (String dna : dnas) {
+            res.add(reverseComplementary(dna));
+        }
+
 
         return res;
     }
@@ -111,5 +139,14 @@ public class Code {
 
     public void setGraph(DirectedGraph<String, DefaultEdge> graph) {
         this.graph = graph;
+    }
+
+    public static List<String> complementaries(List<String> dnas){
+        List<String> complementaries = new ArrayList<>(dnas.size());
+
+        for(String dna : dnas){
+            complementaries.add(complementary(dna));
+        }
+        return complementaries;
     }
 }

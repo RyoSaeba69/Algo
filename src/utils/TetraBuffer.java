@@ -2,6 +2,7 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * Created by antoine on 10/10/15.
@@ -10,6 +11,7 @@ public class TetraBuffer {
 
     private static TetraBuffer tb = null;
     private ArrayList<String> lOne = null;
+    private ArrayList<String> reduceLone = null;
 
     public TetraBuffer() {}
 
@@ -18,6 +20,131 @@ public class TetraBuffer {
             tb = new TetraBuffer();
         }
         return tb;
+    }
+
+    public ArrayList<String> getReduceLOne(){
+        if(this.reduceLone == null){
+            this.reduceLone = new ArrayList<>(126);
+
+            reduceLone.add("GTTG");
+            reduceLone.add("TGCT");
+            reduceLone.add("TGTC");
+            reduceLone.add("TGTA");
+            reduceLone.add("ACTG");
+            reduceLone.add("GTTT");
+            reduceLone.add("ACCT");
+            reduceLone.add("ACTC");
+            reduceLone.add("ACTA");
+            reduceLone.add("TGTT");
+            reduceLone.add("ACCG");
+            reduceLone.add("GCCA");
+            reduceLone.add("ACCC");
+            reduceLone.add("GCCC");
+            reduceLone.add("ACCA");
+            reduceLone.add("TAGA");
+            reduceLone.add("CGGA");
+            reduceLone.add("GCAG");
+            reduceLone.add("GTCA");
+            reduceLone.add("TAGG");
+            reduceLone.add("GTCC");
+            reduceLone.add("GTCG");
+            reduceLone.add("TGCG");
+            reduceLone.add("TGCC");
+            reduceLone.add("TGCA");
+            reduceLone.add("GTTA");
+            reduceLone.add("ACTT");
+            reduceLone.add("TAGT");
+            reduceLone.add("GTTC");
+            reduceLone.add("GTCT");
+            reduceLone.add("CTAG");
+            reduceLone.add("CTAC");
+            reduceLone.add("AAAT");
+            reduceLone.add("ATGG");
+            reduceLone.add("CTAA");
+            reduceLone.add("ATGA");
+            reduceLone.add("AAAG");
+            reduceLone.add("GAAA");
+            reduceLone.add("AAAC");
+            reduceLone.add("GAAC");
+            reduceLone.add("AACA");
+            reduceLone.add("GCTC");
+            reduceLone.add("GCTG");
+            reduceLone.add("CTAT");
+            reduceLone.add("GCTT");
+            reduceLone.add("ATGT");
+            reduceLone.add("TTAG");
+            reduceLone.add("CTTA");
+            reduceLone.add("TTAC");
+            reduceLone.add("TTAA");
+            reduceLone.add("CTCG");
+            reduceLone.add("CCAT");
+            reduceLone.add("CTCC");
+            reduceLone.add("AACT");
+            reduceLone.add("CTCA");
+            reduceLone.add("AATA");
+            reduceLone.add("GCGA");
+            reduceLone.add("GACA");
+            reduceLone.add("CCAG");
+            reduceLone.add("AACG");
+            reduceLone.add("GACC");
+            reduceLone.add("GCGG");
+            reduceLone.add("CCAC");
+            reduceLone.add("AACC");
+            reduceLone.add("GACG");
+            reduceLone.add("CCAA");
+            reduceLone.add("GAAG");
+            reduceLone.add("CCCA");
+            reduceLone.add("GTGA");
+            reduceLone.add("GTGC");
+            reduceLone.add("GTGG");
+            reduceLone.add("TTCG");
+            reduceLone.add("TCAT");
+            reduceLone.add("AGAT");
+            reduceLone.add("TTCC");
+            reduceLone.add("CCTG");
+            reduceLone.add("CCCT");
+            reduceLone.add("CCTC");
+            reduceLone.add("CCTA");
+            reduceLone.add("TTCT");
+            reduceLone.add("AGAC");
+            reduceLone.add("AGAA");
+            reduceLone.add("CCCG");
+            reduceLone.add("GCGT");
+            reduceLone.add("TCAA");
+            reduceLone.add("GACT");
+            reduceLone.add("TCAG");
+            reduceLone.add("TCAC");
+            reduceLone.add("TTCA");
+            reduceLone.add("CCTT");
+            reduceLone.add("TCCT");
+            reduceLone.add("AGCT");
+            reduceLone.add("AGCG");
+            reduceLone.add("AGCC");
+            reduceLone.add("AGCA");
+            reduceLone.add("GGCA");
+            reduceLone.add("CCGC");
+            reduceLone.add("CCGA");
+            reduceLone.add("TCCC");
+            reduceLone.add("TCCA");
+            reduceLone.add("TCCG");
+            reduceLone.add("CATT");
+            reduceLone.add("CATG");
+            reduceLone.add("CATC");
+            reduceLone.add("CATA");
+            reduceLone.add("CCGG");
+            reduceLone.add("TAAC");
+            reduceLone.add("TAAA");
+            reduceLone.add("TAAG");
+            reduceLone.add("ATAG");
+            reduceLone.add("TATG");
+            reduceLone.add("TATT");
+            reduceLone.add("CGTG");
+            reduceLone.add("GCAA");
+
+
+            reduceLone.addAll(this.getS12());
+        }
+        return this.reduceLone;
     }
 
     public ArrayList<String>  getLOne(){
@@ -256,7 +383,28 @@ public class TetraBuffer {
         }
 //        System.out.println("lOne size : " + this.lOne.size());
         return this.lOne;
+//        return this.getReduceLOne();
 
+    }
+
+    public ArrayList<String> getS12(){
+        ArrayList<String> s12 = new ArrayList<String>(12);
+
+
+        s12.add("TGCA");
+        s12.add("CTAG");
+        s12.add("TTAA");
+        s12.add("ACGT");
+        s12.add("AATT");
+        s12.add("GATC");
+        s12.add("AGCT");
+        s12.add("CATG");
+        s12.add("CCGG");
+        s12.add("GGCC");
+        s12.add("TCGA");
+        s12.add("GTAC");
+        
+        return s12;
     }
 
 }

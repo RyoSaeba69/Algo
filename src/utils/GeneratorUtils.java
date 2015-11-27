@@ -15,12 +15,12 @@ import java.util.List;
 /**
  * Created by antoine on 10/11/15.
  */
-public class GeneratorUtils{
+public class GeneratorUtils {
 
     // compareto : -1 lower than
 //                  0 equal
 //                  1 greater than
-    public static <T> List<ICombinatoricsVector<T>> generateObjectsRange(Generator<T> gen, BigInteger startIndex, BigInteger stopIndex){
+    public static <T> List<ICombinatoricsVector<T>> generateObjectsRange(Generator<T> gen, BigInteger startIndex, BigInteger stopIndex) {
 
         List<ICombinatoricsVector<T>> list = new ArrayList<ICombinatoricsVector<T>>();
         Iterator<ICombinatoricsVector<T>> iterator = gen.iterator();
@@ -35,6 +35,16 @@ public class GeneratorUtils{
             }
             index = index.add(BigInteger.ONE);
         }
+
+//        while (iterator.hasNext() && BigIntegerUtils.lte(index, startIndex.subtract(BigInteger.ONE))) {
+//            iterator.next();
+//            index = index.add(BigInteger.ONE);
+//        }
+//
+//        while (iterator.hasNext() && BigIntegerUtils.lte(index, stopIndex)) {
+//            list.add(iterator.next());
+//            index = index.add(BigInteger.ONE);
+//        }
         return list;
     }
 }

@@ -23,6 +23,7 @@ public class GraphUtils {
 
 //        int nbNucleotide = 4;
 
+//        return null;
         for(String tetranucleotide : code){
 
             int n = tetranucleotide.length();
@@ -39,13 +40,18 @@ public class GraphUtils {
                     resGraph.addVertex(last);
                 }
 
-                try{
-                    if(resGraph.addEdge(first, last) == null){
-                        return null;
-                    }
-                } catch (Exception e){
-                    return null;
-                }
+                resGraph.addEdge(first, last);
+
+//                try{
+//                    if(resGraph.addEdge(first, last) == null){
+//                        System.out.println("EXCEPTION");
+//
+//                        return null;
+//                    }
+//                } catch (Exception e){
+//                    System.out.println("EXCEPTION");
+//                    return null;
+//                }
             }
         }
 
